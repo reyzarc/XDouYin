@@ -5,8 +5,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.xtech.xdouyin.ui.fragment.DetailFragment;
-import com.xtech.xdouyin.ui.fragment.HomeFragment;
 import com.xtech.xdouyin.ui.fragment.MoreFragment;
+import com.xtech.xdouyin.ui.fragment.RecommendFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
         mList = new ArrayList<>();
 
         mList.add(MoreFragment.getInstance());
-        mList.add(HomeFragment.getInstance());
+        mList.add(RecommendFragment.getInstance());
         mList.add(DetailFragment.getInstance());
     }
 
