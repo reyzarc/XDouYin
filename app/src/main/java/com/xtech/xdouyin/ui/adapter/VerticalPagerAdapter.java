@@ -1,11 +1,15 @@
 package com.xtech.xdouyin.ui.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+
+import com.xtech.xdouyin.R;
+import com.xtech.xdouyin.widget.FullscreenVideoView;
 
 import java.util.List;
 
@@ -40,6 +44,8 @@ public class VerticalPagerAdapter extends PagerAdapter {
     }
 
 
+
+
     @Override
     public int getCount() {
         return mList==null?0:mList.size();
@@ -53,13 +59,20 @@ public class VerticalPagerAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        ImageView imageView = new ImageView(mContext);
-        imageView.setImageResource(mList.get(position));
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_vertical_view_pager,null);
 
-        container.addView(imageView);
+        FullscreenVideoView videoView = view.findViewById(R.id.fullscreen_video_view);
+        videoView.setVideoURI(Uri.parse("android.resource://"+mContext.getPackageName()+"/"+ mList.get(position)));
 
-        return imageView;
+        videoView.start();
+
+//        ImageView imageView = new ImageView(mContext);
+//        imageView.setImageResource(mList.get(position));
+//        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+        container.addView(view);
+
+        return view;
     }
 
     @Override

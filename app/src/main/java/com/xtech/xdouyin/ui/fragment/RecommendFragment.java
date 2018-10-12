@@ -56,9 +56,14 @@ public class RecommendFragment extends Fragment {
 
     private void initData() {
         List<Integer> list = new ArrayList<>();
-        list.add(R.drawable.banner1);
-        list.add(R.drawable.banner2);
-        list.add(R.drawable.banner3);
+//        list.add(R.drawable.banner1);
+//        list.add(R.drawable.banner2);
+//        list.add(R.drawable.banner3);
+        list.add(R.raw.video10);
+        list.add(R.raw.video11);
+        list.add(R.raw.video12);
+        list.add(R.raw.video13);
+        list.add(R.raw.video14);
 
         mAdapter = new VerticalPagerAdapter(getActivity(), list);
 
@@ -86,6 +91,7 @@ public class RecommendFragment extends Fragment {
 
     }
 
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -104,9 +110,8 @@ public class RecommendFragment extends Fragment {
 
     public void addData(){
         List<Integer> list = new ArrayList<>();
-        list.add(R.drawable.banner1);
-        list.add(R.drawable.banner2);
-        list.add(R.drawable.banner3);
+        list.add(R.raw.video10);
+        list.add(R.raw.video11);
         mAdapter.addData(list);
     }
 }
