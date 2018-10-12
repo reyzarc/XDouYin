@@ -27,6 +27,18 @@ public class VerticalPagerAdapter extends PagerAdapter {
         }
     }
 
+    public void setData(List<Integer> list){
+        mList = list;
+        notifyDataSetChanged();
+    }
+
+    public void addData(List<Integer> list){
+        if(mList!=null){
+            mList.addAll(list);
+            notifyDataSetChanged();
+        }
+    }
+
 
     @Override
     public int getCount() {

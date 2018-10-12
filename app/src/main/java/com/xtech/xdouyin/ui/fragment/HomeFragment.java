@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.xtech.xdouyin.MainActivity;
 import com.xtech.xdouyin.R;
 import com.xtech.xdouyin.widget.NoScrollViewPager;
 
@@ -61,7 +62,10 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewPager = getActivity().findViewById(R.id.view_pager);
+        MainActivity activity = (MainActivity) getActivity();
+        if (activity!=null){
+            mViewPager = activity.findViewById(R.id.view_pager);
+        }
     }
 
     @OnClick({R.id.iv_home, R.id.iv_water, R.id.iv_photo, R.id.iv_fire, R.id.iv_me})

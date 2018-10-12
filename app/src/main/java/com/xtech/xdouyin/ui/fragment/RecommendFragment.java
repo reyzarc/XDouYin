@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Author     : lhu
@@ -61,10 +63,50 @@ public class RecommendFragment extends Fragment {
         mAdapter = new VerticalPagerAdapter(getActivity(), list);
 
         verticalViewPager.setAdapter(mAdapter);
+
+        verticalViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                //如果是最后一页，则自动加载更多数据
+                if(i==mAdapter.getCount()-1){
+                    addData();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
+
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @OnClick({R.id.iv_home_left, R.id.iv_home_right})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_home_left:
+                addData();
+                break;
+            case R.id.iv_home_right:
+                break;
+        }
+    }
+
+    public void addData(){
+        List<Integer> list = new ArrayList<>();
+        list.add(R.drawable.banner1);
+        list.add(R.drawable.banner2);
+        list.add(R.drawable.banner3);
+        mAdapter.addData(list);
     }
 }
