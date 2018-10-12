@@ -1,10 +1,10 @@
 package com.xtech.xdouyin;
 
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 
 import com.xtech.xdouyin.common.BaseActivity;
 import com.xtech.xdouyin.ui.adapter.HomePagerAdapter;
+import com.xtech.xdouyin.widget.NoScrollViewPager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -13,7 +13,7 @@ public class MainActivity extends BaseActivity {
 
 
     @BindView(R.id.view_pager)
-    ViewPager viewPager;
+    NoScrollViewPager viewPager;
 
     private HomePagerAdapter mAdapter;
 

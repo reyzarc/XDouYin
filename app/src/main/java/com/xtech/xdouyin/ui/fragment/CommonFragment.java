@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.xtech.xdouyin.R;
 
@@ -47,9 +48,17 @@ public class CommonFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_common, null);
         ButterKnife.bind(this, view);
 
+        final String page = getArguments().getString("page");
 
-        tvContent.setText(getArguments().getString("page"));
+        tvContent.setText(page);
         rlContent.setBackgroundColor(getArguments().getInt("color"));
+
+        tvContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(),page,Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return view;
     }

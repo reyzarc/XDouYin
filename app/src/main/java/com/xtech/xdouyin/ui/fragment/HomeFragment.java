@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.xtech.xdouyin.R;
+import com.xtech.xdouyin.widget.NoScrollViewPager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +39,10 @@ public class HomeFragment extends Fragment {
         return new HomeFragment();
     }
 
+    private boolean isHome;
+
+    private NoScrollViewPager mViewPager;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,6 +58,12 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mViewPager = getActivity().findViewById(R.id.view_pager);
+    }
+
     @OnClick({R.id.iv_home, R.id.iv_water, R.id.iv_photo, R.id.iv_fire, R.id.iv_me})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -61,32 +72,39 @@ public class HomeFragment extends Fragment {
                     mRecommendFragment = RecommendFragment.getInstance();
                 }
                 switchFragment(mRecommendFragment);
+                isHome = true;
                 break;
             case R.id.iv_water:
                 if (mWaterFragment == null) {
                     mWaterFragment = CommonFragment.getInstance("water",R.color.black);
                 }
                 switchFragment(mWaterFragment);
+                isHome = false;
                 break;
             case R.id.iv_photo:
                 if (mPhotoFragment == null) {
                     mPhotoFragment = CommonFragment.getInstance("photo",R.color.red);
                 }
                 switchFragment(mPhotoFragment);
+                isHome = false;
                 break;
             case R.id.iv_fire:
                 if (mFireFragment == null) {
                     mFireFragment = CommonFragment.getInstance("fire",R.color.green);
                 }
                 switchFragment(mFireFragment);
+                isHome = false;
                 break;
             case R.id.iv_me:
                 if (mMeFragment == null) {
                     mMeFragment = CommonFragment.getInstance("me",R.color.yellow);
                 }
                 switchFragment(mMeFragment);
+                isHome = false;
                 break;
         }
+
+        mViewPager.setIsCanScroll(isHome);
     }
 
 
