@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.xtech.xdouyin.R;
-import com.xtech.xdouyin.ui.adapter.VerticalPagerAdapter;
+import com.xtech.xdouyin.ui.adapter.VideoPagerAdapter;
 import com.xtech.xdouyin.widget.VerticalViewPager;
 
 import java.util.ArrayList;
@@ -40,7 +40,8 @@ public class RecommendFragment extends Fragment {
         return new RecommendFragment();
     }
 
-    private VerticalPagerAdapter mAdapter;
+//    private VerticalPagerAdapter mAdapter;
+    private VideoPagerAdapter mAdapter;
 
 
     @Nullable
@@ -65,10 +66,15 @@ public class RecommendFragment extends Fragment {
         list.add(R.raw.video13);
         list.add(R.raw.video14);
 
-        mAdapter = new VerticalPagerAdapter(getActivity(), list);
+        mAdapter = new VideoPagerAdapter(getChildFragmentManager(),list);
 
         verticalViewPager.setAdapter(mAdapter);
 
+
+//        mAdapter = new VerticalPagerAdapter(getActivity(), list);
+//
+//        verticalViewPager.setAdapter(mAdapter);
+//
         verticalViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
