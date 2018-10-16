@@ -1,9 +1,15 @@
 package com.xtech.xdouyin.utils;
 
-import android.database.Observable;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
 /**
  * Author     : lhu
@@ -125,7 +131,7 @@ public class RxBus {
      * 普通订阅解绑
      * @param disposable
      */
-    public static   void  rxBusUnbund(CompositeDisposable  disposable){
+    public static   void  rxBusUnbund(CompositeDisposable disposable){
         if (null != disposable && !disposable.isDisposed()) {
             disposable.clear();
         }
