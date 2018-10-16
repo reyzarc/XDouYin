@@ -108,6 +108,7 @@ public class HomeFragment extends Fragment {
                 break;
         }
 
+
         mViewPager.setIsCanScroll(isHome);
     }
 
