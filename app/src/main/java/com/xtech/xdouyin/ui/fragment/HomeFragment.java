@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.xtech.xdouyin.MainActivity;
 import com.xtech.xdouyin.R;
+import com.xtech.xdouyin.common.BaseFragment;
 import com.xtech.xdouyin.ui.model.event.FragmentChangeEvent;
 import com.xtech.xdouyin.utils.RxBus;
 import com.xtech.xdouyin.widget.NoScrollViewPager;
@@ -20,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseFragment {
 
 
     @BindView(R.id.iv_home)
@@ -42,7 +43,7 @@ public class HomeFragment extends Fragment {
         return new HomeFragment();
     }
 
-    private boolean isHome;
+    private boolean isHome = true;
 
     private NoScrollViewPager mViewPager;
 
@@ -111,7 +112,7 @@ public class HomeFragment extends Fragment {
                 break;
         }
 
-        //只在值变化的时候发送消息，false->true,showHome;true->false,hideHome;
+        //只在值变化的时候发送消息，false->true,showVideo;true->false,hideVideo;
         if(origin!=isHome){
             RxBus.getInstance().postEvent(new FragmentChangeEvent(origin));
         }

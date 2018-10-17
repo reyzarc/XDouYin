@@ -9,8 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xtech.xdouyin.R;
+import com.xtech.xdouyin.common.BaseFragment;
 
-public class DetailFragment extends Fragment {
+public class DetailFragment extends BaseFragment {
     public static DetailFragment getInstance(){
         return new DetailFragment();
     }

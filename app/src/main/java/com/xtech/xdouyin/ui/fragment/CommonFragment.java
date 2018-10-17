@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xtech.xdouyin.R;
+import com.xtech.xdouyin.common.BaseFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,7 +23,7 @@ import butterknife.ButterKnife;
  * Description:
  */
 
-public class CommonFragment extends Fragment {
+public class CommonFragment extends BaseFragment {
 
     @BindView(R.id.tv_content)
     TextView tvContent;

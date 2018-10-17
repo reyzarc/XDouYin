@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.xtech.xdouyin.R;
+import com.xtech.xdouyin.common.BaseFragment;
 import com.xtech.xdouyin.ui.adapter.VideoPagerAdapter;
+import com.xtech.xdouyin.widget.FullscreenVideoView;
 import com.xtech.xdouyin.widget.VerticalViewPager;
 
 import java.util.ArrayList;
@@ -27,7 +29,7 @@ import butterknife.OnClick;
  * Description:
  */
 
-public class RecommendFragment extends Fragment {
+public class RecommendFragment extends BaseFragment {
 
     @BindView(R.id.vertical_view_pager)
     VerticalViewPager verticalViewPager;
@@ -70,6 +72,8 @@ public class RecommendFragment extends Fragment {
 
         verticalViewPager.setAdapter(mAdapter);
 
+        verticalViewPager.setOffscreenPageLimit(1);
+
 
 //        mAdapter = new VerticalPagerAdapter(getActivity(), list);
 //
@@ -83,6 +87,7 @@ public class RecommendFragment extends Fragment {
 
             @Override
             public void onPageSelected(int i) {
+
                 //如果是最后一页，则自动加载更多数据
                 if(i==mAdapter.getCount()-1){
                     addData();

@@ -1,5 +1,6 @@
 package com.xtech.xdouyin.ui.fragment;
 
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xtech.xdouyin.R;
+import com.xtech.xdouyin.common.BaseFragment;
 import com.xtech.xdouyin.ui.model.event.FragmentChangeEvent;
+import com.xtech.xdouyin.utils.PreferenceUtil;
 import com.xtech.xdouyin.utils.RxBus;
 import com.xtech.xdouyin.widget.FullscreenVideoView;
 
@@ -26,12 +29,14 @@ import io.reactivex.functions.Consumer;
  * Description:
  */
 
-public class VideoFragment extends Fragment {
+public class VideoFragment extends BaseFragment {
 
     @BindView(R.id.fullscreen_video_view)
     FullscreenVideoView fullscreenVideoView;
 
     private boolean isViewCreated;
+
+    private boolean isVideoFragmentShow;
 
     public static VideoFragment getInstance(int videoSrc) {
         VideoFragment fragment = new VideoFragment();
@@ -47,9 +52,18 @@ public class VideoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_video, null);
         ButterKnife.bind(this, view);
 
-        fullscreenVideoView.setVideoURI(Uri.parse("android.resource://"+getActivity().getPackageName()+"/"+ getArguments().getInt("video")));
-
+        //设置视频路径
+        fullscreenVideoView.setVideoURI(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + getArguments().getInt("video")));
+        //设置视频到第一帧,产生预览效果
         fullscreenVideoView.seekTo(1);
+
+        //设置视频循环播放
+        fullscreenVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                fullscreenVideoView.start();
+            }
+        });
 
         return view;
     }
@@ -59,12 +73,26 @@ public class VideoFragment extends Fragment {
         Disposable disposable = RxBus.getInstance().toObservable(FragmentChangeEvent.class).subscribe(new Consumer<FragmentChangeEvent>() {
             @Override
             public void accept(FragmentChangeEvent fragmentChangeEvent) throws Exception {
-                Log.e("reyzarc","-------->"+fragmentChangeEvent.isHideHome());
-                if(isViewCreated&&fullscreenVideoView!=null) {
-                    playVideo(!fragmentChangeEvent.isHideHome());
+
+                if (fullscreenVideoView != null) {
+                    if (fragmentChangeEvent.isHideVideo()) {//video已经被隐藏,此时暂停播放
+                        if (fullscreenVideoView.isPlaying()) {
+                            fullscreenVideoView.pause();
+                        }
+                        Log.e("reyzarc","pause");
+                    } else {//video展示在前面,则继续播放
+                        //TODO 只播放当前显示在界面中的video
+                        int video = PreferenceUtil.getInt(getActivity(), "playing_video", -1);
+                        Log.e("reyzarc", getArguments().getInt("video") + "-------->" + video);
+                        if (video != -1 && video == getArguments().getInt("video")) {
+                            fullscreenVideoView.start();
+                        }
+                    }
                 }
             }
         });
+        addDisposable(disposable);
+
         super.onActivityCreated(savedInstanceState);
     }
 
@@ -75,7 +103,7 @@ public class VideoFragment extends Fragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
-        if(isViewCreated){
+        if (isViewCreated) {
             playVideo(isVisibleToUser);
         }
     }
@@ -85,10 +113,13 @@ public class VideoFragment extends Fragment {
         super.onDestroyView();
     }
 
-    public void playVideo(boolean isPlay){
-        if(isPlay){
+    public void playVideo(boolean isPlay) {
+        if (isPlay) {
+            Log.e("reyzarc", getArguments().getInt("video") + "----");
             fullscreenVideoView.start();
-        }else{
+            //保存正在播放的video
+            PreferenceUtil.putInt(getActivity(), "playing_video", getArguments().getInt("video"));
+        } else {
             fullscreenVideoView.stopPlayback();
             fullscreenVideoView.resume();
             fullscreenVideoView.seekTo(1);

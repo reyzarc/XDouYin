@@ -2,19 +2,19 @@ package com.xtech.xdouyin.ui.model.event;
 
 public class FragmentChangeEvent {
     /**
-     * false-showHome,true-hideHome
+     * false-showVideo,true-hideVideo
      */
-    private boolean isHideHome;
+    private boolean isHideVideo;
 
-    public FragmentChangeEvent(boolean isHideHome){
-        this.isHideHome = isHideHome;
+    public FragmentChangeEvent(boolean isHideVideo){
+        this.isHideVideo = isHideVideo;
     }
 
-    public boolean isHideHome() {
-        return isHideHome;
+    public boolean isHideVideo() {
+        return isHideVideo;
     }
 
-    public void setHideHome(boolean hideHome) {
-        isHideHome = hideHome;
+    public void setHideVideo(boolean hideVideo) {
+        isHideVideo = hideVideo;
     }
 }
