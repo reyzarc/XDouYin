@@ -12,6 +12,8 @@ import android.widget.ImageView;
 
 import com.xtech.xdouyin.MainActivity;
 import com.xtech.xdouyin.R;
+import com.xtech.xdouyin.ui.model.event.FragmentChangeEvent;
+import com.xtech.xdouyin.utils.RxBus;
 import com.xtech.xdouyin.widget.NoScrollViewPager;
 
 import butterknife.BindView;
@@ -70,6 +72,7 @@ public class HomeFragment extends Fragment {
 
     @OnClick({R.id.iv_home, R.id.iv_water, R.id.iv_photo, R.id.iv_fire, R.id.iv_me})
     public void onViewClicked(View view) {
+        boolean origin = isHome;
         switch (view.getId()) {
             case R.id.iv_home:
                 if (mRecommendFragment == null) {
@@ -108,6 +111,10 @@ public class HomeFragment extends Fragment {
                 break;
         }
 
+        //只在值变化的时候发送消息，false->true,showHome;true->false,hideHome;
+        if(origin!=isHome){
+            RxBus.getInstance().postEvent(new FragmentChangeEvent(origin));
+        }
 
         mViewPager.setIsCanScroll(isHome);
     }

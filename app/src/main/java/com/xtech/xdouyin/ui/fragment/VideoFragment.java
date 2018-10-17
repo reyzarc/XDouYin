@@ -5,15 +5,20 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.xtech.xdouyin.R;
+import com.xtech.xdouyin.ui.model.event.FragmentChangeEvent;
+import com.xtech.xdouyin.utils.RxBus;
 import com.xtech.xdouyin.widget.FullscreenVideoView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 /**
  * Author     : lhu
@@ -50,6 +55,20 @@ public class VideoFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        Disposable disposable = RxBus.getInstance().toObservable(FragmentChangeEvent.class).subscribe(new Consumer<FragmentChangeEvent>() {
+            @Override
+            public void accept(FragmentChangeEvent fragmentChangeEvent) throws Exception {
+                Log.e("reyzarc","-------->"+fragmentChangeEvent.isHideHome());
+                if(isViewCreated&&fullscreenVideoView!=null) {
+                    playVideo(!fragmentChangeEvent.isHideHome());
+                }
+            }
+        });
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         isViewCreated = true;
     }
@@ -57,18 +76,22 @@ public class VideoFragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         if(isViewCreated){
-            if(isVisibleToUser){
-                fullscreenVideoView.start();
-            }else{
-                fullscreenVideoView.stopPlayback();
-                fullscreenVideoView.resume();
-                fullscreenVideoView.seekTo(1);
-            }
+            playVideo(isVisibleToUser);
         }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    public void playVideo(boolean isPlay){
+        if(isPlay){
+            fullscreenVideoView.start();
+        }else{
+            fullscreenVideoView.stopPlayback();
+            fullscreenVideoView.resume();
+            fullscreenVideoView.seekTo(1);
+        }
     }
 }

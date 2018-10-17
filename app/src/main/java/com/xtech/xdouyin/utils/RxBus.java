@@ -131,7 +131,7 @@ public class RxBus {
      * 普通订阅解绑
      * @param disposable
      */
-    public static   void  rxBusUnbund(CompositeDisposable disposable){
+    public static   void  unbindRxBus(CompositeDisposable disposable){
         if (null != disposable && !disposable.isDisposed()) {
             disposable.clear();
         }
