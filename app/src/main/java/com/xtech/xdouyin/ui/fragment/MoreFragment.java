@@ -11,6 +11,12 @@ import android.view.ViewGroup;
 import com.xtech.xdouyin.R;
 import com.xtech.xdouyin.common.BaseFragment;
 
+/**
+ * Author     : lhu
+ * Date       : 2018/10/11
+ * Description:
+ */
+
 public class MoreFragment extends BaseFragment {
 
     public static MoreFragment getInstance(){

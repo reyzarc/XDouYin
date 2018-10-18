@@ -11,6 +11,12 @@ import com.xtech.xdouyin.ui.fragment.MoreFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Author     : lhu
+ * Date       : 2018/10/11
+ * Description:
+ */
+
 public class HomePagerAdapter extends FragmentPagerAdapter {
 
     List<Fragment> mList;

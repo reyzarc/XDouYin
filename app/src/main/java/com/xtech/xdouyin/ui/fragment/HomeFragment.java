@@ -21,6 +21,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * Author     : lhu
+ * Date       : 2018/10/11
+ * Description:
+ */
+
 public class HomeFragment extends BaseFragment {
 
 

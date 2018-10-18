@@ -26,7 +26,7 @@ import io.reactivex.functions.Consumer;
 /**
  * Author     : lhu
  * Date       : 2018/10/15
- * Description:
+ * Description: 视频播放页面
  */
 
 public class VideoFragment extends BaseFragment {
@@ -35,8 +35,6 @@ public class VideoFragment extends BaseFragment {
     FullscreenVideoView fullscreenVideoView;
 
     private boolean isViewCreated;
-
-    private boolean isVideoFragmentShow;
 
     public static VideoFragment getInstance(int videoSrc) {
         VideoFragment fragment = new VideoFragment();
@@ -56,7 +54,6 @@ public class VideoFragment extends BaseFragment {
         fullscreenVideoView.setVideoURI(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + getArguments().getInt("video")));
         //设置视频到第一帧,产生预览效果
         fullscreenVideoView.seekTo(1);
-
         //设置视频循环播放
         fullscreenVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -70,20 +67,17 @@ public class VideoFragment extends BaseFragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        //接收fragment页面变化消息，如果videoFragment没有展示给用户，则停止播放，反之则自动播放
         Disposable disposable = RxBus.getInstance().toObservable(FragmentChangeEvent.class).subscribe(new Consumer<FragmentChangeEvent>() {
             @Override
             public void accept(FragmentChangeEvent fragmentChangeEvent) throws Exception {
-
                 if (fullscreenVideoView != null) {
                     if (fragmentChangeEvent.isHideVideo()) {//video已经被隐藏,此时暂停播放
                         if (fullscreenVideoView.isPlaying()) {
                             fullscreenVideoView.pause();
                         }
-                        Log.e("reyzarc","pause");
                     } else {//video展示在前面,则继续播放
-                        //TODO 只播放当前显示在界面中的video
                         int video = PreferenceUtil.getInt(getActivity(), "playing_video", -1);
-                        Log.e("reyzarc", getArguments().getInt("video") + "-------->" + video);
                         if (video != -1 && video == getArguments().getInt("video")) {
                             fullscreenVideoView.start();
                         }
@@ -115,9 +109,8 @@ public class VideoFragment extends BaseFragment {
 
     public void playVideo(boolean isPlay) {
         if (isPlay) {
-            Log.e("reyzarc", getArguments().getInt("video") + "----");
             fullscreenVideoView.start();
-            //保存正在播放的video
+            //保存正在播放视频页面的video路径
             PreferenceUtil.putInt(getActivity(), "playing_video", getArguments().getInt("video"));
         } else {
             fullscreenVideoView.stopPlayback();

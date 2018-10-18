@@ -3,7 +3,6 @@ package com.xtech.xdouyin.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.ImageView;
 import com.xtech.xdouyin.R;
 import com.xtech.xdouyin.common.BaseFragment;
 import com.xtech.xdouyin.ui.adapter.VideoPagerAdapter;
-import com.xtech.xdouyin.widget.FullscreenVideoView;
 import com.xtech.xdouyin.widget.VerticalViewPager;
 
 import java.util.ArrayList;
@@ -26,7 +24,7 @@ import butterknife.OnClick;
 /**
  * Author     : lhu
  * Date       : 2018/10/11
- * Description:
+ * Description: 推荐页面，可在该页面中请求网络拉取视频数据，并设置到videoFragment中
  */
 
 public class RecommendFragment extends BaseFragment {
@@ -42,7 +40,6 @@ public class RecommendFragment extends BaseFragment {
         return new RecommendFragment();
     }
 
-//    private VerticalPagerAdapter mAdapter;
     private VideoPagerAdapter mAdapter;
 
 
@@ -54,14 +51,13 @@ public class RecommendFragment extends BaseFragment {
 
         initData();
         return view;
-
     }
 
+    /**
+     * 初始化视频数据
+     */
     private void initData() {
         List<Integer> list = new ArrayList<>();
-//        list.add(R.drawable.banner1);
-//        list.add(R.drawable.banner2);
-//        list.add(R.drawable.banner3);
         list.add(R.raw.video10);
         list.add(R.raw.video11);
         list.add(R.raw.video12);
@@ -74,11 +70,6 @@ public class RecommendFragment extends BaseFragment {
 
         verticalViewPager.setOffscreenPageLimit(1);
 
-
-//        mAdapter = new VerticalPagerAdapter(getActivity(), list);
-//
-//        verticalViewPager.setAdapter(mAdapter);
-//
         verticalViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
@@ -99,7 +90,6 @@ public class RecommendFragment extends BaseFragment {
 
             }
         });
-
     }
 
 
@@ -119,6 +109,9 @@ public class RecommendFragment extends BaseFragment {
         }
     }
 
+    /**
+     * 加载更多数据，可以在这里处理网络分页请求视频并加载
+     */
     public void addData(){
         List<Integer> list = new ArrayList<>();
         list.add(R.raw.video10);
